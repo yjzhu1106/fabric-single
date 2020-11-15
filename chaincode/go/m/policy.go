@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
+	"time"
 )
 
 type Policy struct {
@@ -29,9 +30,13 @@ type AO struct {
 	ResourceKey string `json:"resourceKey"`
 	URL       string `json:"url"`
 }
+type sign struct{
+	Rtext string `json:"rtext"`
+	Stext string `json:"stext"`
+}
 
 type AP struct {
-	Auth_sign string `json:"auth_sign"`
+	Auth_sign sign `json:"auth_sign"`
 	P_url  int `json:"p_url"`
 	P_data int `json:"p_data"`
 }
@@ -40,7 +45,7 @@ type AE struct {
 	CreateTime  int64 `json:"createTime"`
 	EndTime     int64 `json:"endTime"`
 	Address     string `json:"address"`
-	Sign_PKuser string `json:"sign_PKuser"`
+	Sign_PKuser sign `json:"sign_PKuser"`
 }
 
 func (p *Policy) ToBytes() []byte {
@@ -52,7 +57,8 @@ func (p *Policy) ToBytes() []byte {
 }
 
 func (p *Policy) GetID() string {
-	return fmt.Sprintf("%x", sha256.Sum256([]byte(p.AS.UserId+p.AO.DataId)))
+	t := fmt.Sprintf("%x", time.Now().Unix())
+	return fmt.Sprintf("%x", sha256.Sum256([]byte(p.AS.UserId+p.AO.DataId+t)))
 }
 
 

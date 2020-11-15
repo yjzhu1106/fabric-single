@@ -79,7 +79,13 @@ async function invoke(ccName, fName, args) {
             case "AddData":
             case "GetData":
             case "GetURL":
-                // console.log("begin submitTransaction")
+            case "UpdateRecord":
+            case "GetRecord":
+            case "Auth":
+            case "Synchro":
+            case "GetRequest":
+            case "GetResponse":
+                // console.log("begin submitTransaction")ad
                 const r1 = await contract.submitTransaction(fName, ...args);
                 // console.log("${r1.toString()}")
                 if (isCMD) {

@@ -41,8 +41,8 @@ func (r *Resource) ToByte() []byte {
 }
 
 func (r *Resource) GetId() string {
-	t := fmt.Sprintf("%x", r.Timestamp)
-	return fmt.Sprintf("%x", sha256.Sum256([]byte(r.ResourceId+t)))
+	// t := fmt.Sprintf("%x", r.Timestamp)
+	return fmt.Sprintf("%x", sha256.Sum256([]byte(r.ResourceId)))
 }
 
 func NewResource(b []byte) (Resource, error) {

@@ -37,5 +37,5 @@ func (r *ABACRequest) GetAttrs() Attrs {
 }
 
 func (r *ABACRequest) GetId() string {
-	return fmt.Sprintf("%x", sha256.Sum256(r.ToByte()))
+	return fmt.Sprintf("%x", sha256.Sum256([]byte(r.AS.UserId+r.AO.Signer)))
 }

@@ -1,0 +1,36 @@
+# Definition of nodes
+peer1: &peer1
+#  addr: peer0.org1.example.com:7051
+  addr: localhost:7051
+  tls_ca_cert: ./crypto-config/peerOrganizations/org1.fabric-iot.edu/peers/peer0.org1.fabric-iot.edu/msp/tlscacerts/tlsca.org1.fabric-iot.edu-cert.pem
+
+peer2: &peer2
+#  addr: peer0.org2.example.com:9051
+  addr: localhost:9051
+  tls_ca_cert: ./crypto-config/peerOrganizations/org2.fabric-iot.edu/peers/peer0.org2.fabric-iot.edu/msp/tlscacerts/tlsca.org2.fabric-iot.edu-cert.pem
+
+orderer1: &orderer1
+  addr: localhost:7050
+  tls_ca_cert: ./crypto-config/ordererOrganizations/fabric-iot.edu/msp/tlscacerts/tlsca.fabric-iot.edu-cert.pem
+
+# Nodes to interact with
+endorsers:
+  - *peer1
+  - *peer2
+# we might support multi-committer in the future for more complex test scenario,
+# i.e. consider tx committed only if it's done on >50% of nodes. But for now,
+# it seems sufficient to support single committer.
+committer: *peer2
+orderer: *orderer1
+
+# Invocation configs
+channel: iot-channel
+chaincode: apmc
+args: 
+  - AddPolicy
+  - '{"AS":{"userId":"user1","role":"owner","PKuser":"MAKNFKSLFHSAHFLSFA="},"AO":{"dataId":"data1","signer":"user1","sign_data":"dksalhfklhfkajlfkql","resourceKey":"be9ecaa87baefef74b9c574092466ce332513cddf981fcba08087a1be9adc5ba","url":"https://localhost"},"AP":{"auth_sign":"user1Sign","p_data":1,"p_url":1},"AE":{"createdTime":1575468182,"endTime":1976468182,"address":"10.10.39.70","sign_PKuser":"ahdjksahjkfhsjkah="}}'
+mspid: Org1MSP
+private_key: ./crypto-config/peerOrganizations/org1.fabric-iot.edu/users/User1@org1.fabric-iot.edu/msp/keystore/70a1dfad23428f039027e7215abe48ec9de53f4ba4a575e259ea8ca8298e5743_sk
+sign_cert: ./crypto-config/peerOrganizations/org1.fabric-iot.edu/users/User1@org1.fabric-iot.edu/msp/signcerts/User1@org1.fabric-iot.edu-cert.pem
+num_of_conn: 20
+client_per_conn: 40

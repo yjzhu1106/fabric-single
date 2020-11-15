@@ -16,6 +16,8 @@ type DACCContract interface {
 	RequestAccess(shim.ChaincodeStubInterface, []string) peer.Response
 	ResponseAccess(shim.ChaincodeStubInterface, []string) peer.Response
 	CheckAccess(shim.ChaincodeStubInterface, []string) peer.Response
+	GetRequest(shim.ChaincodeStubInterface, []string) peer.Response
+	GetResponse(shim.ChaincodeStubInterface, []string) peer.Response
 	//ActionRecord(shim.ChaincodeStubInterface, []string) peer.Response
 	Auth() peer.Response
 }
@@ -42,10 +44,12 @@ func (cc *Chaincode) Invoke(APIstub shim.ChaincodeStubInterface) peer.Response {
 		return cc.CheckAccess(APIstub, args)
 	} else if function == "Synchro"{
 		return cc.Synchro()
+	}else if function == "GetRequest"{
+		return cc.GetRequest(APIstub, args)
+	}else if function == "GetResponse"{
+		return cc.GetResponse(APIstub, args)
 	}
-	//else if function == "ActionRecord" {
-	//	cc.ActionRecord(APIstub, args)
-	//}
+
 	return shim.Error("Invalid Smart Contract function name...")
 }
 func (cc *Chaincode) Auth() peer.Response {
@@ -68,6 +72,27 @@ func (cc *Chaincode) parseResponse(str string) (m.ABACResponse, error) {
 	return b, err
 }
 
+func (cc *Chaincode) GetRequest(APIstub shim.ChaincodeStubInterface, args []string) peer.Response{
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of argumentcc. Expecting 1.....")
+	}
+	requestAsBytes, err := APIstub.GetState(args[0])
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	return shim.Success(requestAsBytes)
+}
+func (cc *Chaincode) GetResponse(APIstub shim.ChaincodeStubInterface, args []string) peer.Response{
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of argumentcc. Expecting 1.....")
+	}
+	responseAsBytes, err := APIstub.GetState(args[0])
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	return shim.Success(responseAsBytes)
+}
+
 func (cc *Chaincode) RequestAccess(APIstub shim.ChaincodeStubInterface, args []string) peer.Response {
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of argumentcc. Expecting 1.....")
@@ -85,16 +110,11 @@ func (cc *Chaincode) RequestAccess(APIstub shim.ChaincodeStubInterface, args []s
 	if err != nil {
 		return shim.Error(err.Error())
 	}
-	return shim.Success([]byte(abacRequest.ToByte()))
+	return shim.Success([]byte(abacRequest.GetId()))
 }
 
 func (cc *Chaincode) ResponseAccess(APIstub shim.ChaincodeStubInterface, args []string) peer.Response {
-	//if len(args) != 3{
-	//	return shim.Error("Incorrect number of argumentcc. Expecting 1.....")
-	//}
-	// query the request from requester, make the policy for the requester
-	// args == the userId of requester, the dataId of owner
-	// {"Args":["policyId","owner","requestId","status","endtime"]}
+
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of argumentcc. Expecting 1.....")
 	}
@@ -108,27 +128,7 @@ func (cc *Chaincode) ResponseAccess(APIstub shim.ChaincodeStubInterface, args []
 		return shim.Error(err.Error())
 	}
 	return shim.Success([]byte(responseId))
-	//requestId := fmt.Sprintf("%x", sha256.Sum256([]byte(args[0]+args[1])))
-	//requestAsBytes, err := APIstub.GetState(requestId)
-	//if err != nil{
-	//	return shim.Error("403")
-	//}
-	//abacRequest := m.ABACRequest{}
-	//err = json.Unmarshal(requestAsBytes,&abacRequest)
-	//if err != nil{
-	//	return shim.Error("403")
-	//}
-	// abacRequest = {AS{"userId","role","PKuser"},AO{"dataId","signer","","",""}}
-	//ownerPolicyAsByte, err := APIstub.GetState(args[2])
-	//if err != nil{
-	//	return shim.Error("403")
-	//}
-	//ownerPolicy := m.Policy{}
-	//err = json.Unmarshal(ownerPolicyAsByte,&ownerPolicy)
-	//if err != nil{
-	//	return shim.Error("403")
-	//}
-	// a sign about the request, sign(PKuser, PKowner)
+
 }
 func (cc *Chaincode) CheckAccess(APIstub shim.ChaincodeStubInterface, args []string) peer.Response {
 	if len(args) != 1{

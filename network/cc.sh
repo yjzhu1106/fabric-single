@@ -85,7 +85,7 @@ function initCC() {
     --tlsRootCertFiles ${ORG1_TLS_ROOTCERT_FILE}
 
   echo "Waiting for contract instantiating..."
-  process 15
+  process 10
 }
 
 function process() {
@@ -142,7 +142,7 @@ function upgradeCC() {
     --tlsRootCertFiles ${ORG1_TLS_ROOTCERT_FILE}
 
   echo "Waiting for instantiation request to be committed ..."
-  sleep 15
+  sleep 10
 }
 
 # set -x

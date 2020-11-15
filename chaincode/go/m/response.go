@@ -31,5 +31,5 @@ func (re *ABACResponse) ToByte() []byte {
 }
 
 func (re *ABACResponse) GetId() string{
-	return fmt.Sprintf("%x", sha256.Sum256(re.ToByte()))
+	return fmt.Sprintf("%x", sha256.Sum256([]byte(re.PolicyId)))
 }

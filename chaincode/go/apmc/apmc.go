@@ -3,7 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/golang/protobuf/proto"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
+	"github.com/hyperledger/fabric/protos/msp"
 	"github.com/hyperledger/fabric/protos/peer"
 	"github.com/yjzhu1106/fabric-single/chaincode/go/m"
 )
@@ -15,7 +17,7 @@ type APMContract interface {
 	UpdatePolicy(shim.ChaincodeStubInterface, []string) peer.Response
 	DeletePolicy(shim.ChaincodeStubInterface, []string) peer.Response
 	QueryPolicy(shim.ChaincodeStubInterface, []string) peer.Response
-	Auth() bool
+	Auth(shim.ChaincodeStubInterface) bool
 	Synchro() peer.Response
 }
 type Chaincode struct {
@@ -68,8 +70,14 @@ func (cc *Chaincode) AddPolicy(APIstub shim.ChaincodeStubInterface, args []strin
 	//queryconsole, _ := APIstub.GetState(policy.GetID())
 	queryconsole := cc.QueryPolicy(APIstub, []string{policy.GetID()})
 	if queryconsole.GetStatus() == 200 {
-		return shim.Error("policy exited...")
+		// return shim.Error("policy exited...")
+		err = APIstub.PutState(policy.GetID(), policy.ToBytes())
+		if err != nil {
+		return shim.Error(err.Error())
+		}
+		return shim.Success([]byte(policy.GetID()))
 	}
+
 	err = APIstub.PutState(policy.GetID(), policy.ToBytes())
 	if err != nil {
 		return shim.Error(err.Error())
@@ -78,22 +86,27 @@ func (cc *Chaincode) AddPolicy(APIstub shim.ChaincodeStubInterface, args []strin
 }
 
 func (cc *Chaincode) UpdatePolicy(APIstub shim.ChaincodeStubInterface, args []string) peer.Response {
-	if len(args) != 1 {
+	if len(args) != 2 {
 		return shim.Error("Incorrect number of argumentcc. Expecting 1.....")
 	}
-	policy, err := cc.parsePolicy(args[0])
+	policy, err := cc.parsePolicy(args[1])
 	if err != nil {
 		return shim.Error(err.Error())
 	}
-	r := cc.QueryPolicy(APIstub, []string{policy.GetID()})
+	r := cc.QueryPolicy(APIstub, []string{args[0]})
 	if r.GetStatus() != 200 {
-		return shim.Error("policy not exit......")
+		// return shim.Error("policy not exit......")
+		err = APIstub.PutState(args[0], policy.ToBytes())
+		if err != nil {
+			return shim.Error(err.Error())
+		}
+		return shim.Success(policy.ToBytes())
 	}
-	err = APIstub.PutState(policy.GetID(), policy.ToBytes())
+	err = APIstub.PutState(args[0], policy.ToBytes())
 	if err != nil {
 		return shim.Error(err.Error())
 	}
-	return shim.Success([]byte(policy.GetID()))
+	return shim.Success(policy.ToBytes())
 	//return cc.AddPolicy(APIstub, args)
 }
 
@@ -122,7 +135,21 @@ func (cc *Chaincode) QueryPolicy(APIstub shim.ChaincodeStubInterface, args []str
 	return shim.Success(policyAsBytes)
 }
 
-func (cc *Chaincode) Auth() bool{
+func (cc *Chaincode) Auth(APIStub shim.ChaincodeStubInterface) bool{
+	creatorByte, err:= APIStub.GetCreator()
+	si := &msp.SerializedIdentity{}
+	err = proto.Unmarshal(creatorByte,si)
+	mspId := si.GetMspid()
+	cert := string(si.GetIdBytes())
+	if err != nil{
+		return false
+	}
+	if string(mspId) == ""{
+		return false
+	}
+	if cert == ""{
+		return false
+	}
 	return true
 }
 

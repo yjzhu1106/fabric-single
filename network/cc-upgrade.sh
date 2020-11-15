@@ -3,4 +3,4 @@
 # Exit on first error
 set -e
 
-./cc.sh upgrade ac 1.2 go/ac Synchro
+./cc.sh upgrade apmc 1.8 go/apmc Synchro
