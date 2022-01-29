@@ -1,0 +1,49 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "a+nrIQNkn5e068etEAPn28LfVWQ=",
+			"path": "github.com/hyperledger/fabric-contract-api-go/contractapi",
+			"revision": "f63a39348cc7f0a505d1dec267979142ba1b1f31",
+			"revisionTime": "2021-03-22T16:57:56Z"
+		},
+		{
+			"checksumSHA1": "orvpc8S+PemhxDurSHUTMZ7iyco=",
+			"path": "github.com/hyperledger/fabric-contract-api-go/contractapi/utils",
+			"revision": "f63a39348cc7f0a505d1dec267979142ba1b1f31",
+			"revisionTime": "2021-03-22T16:57:56Z"
+		},
+		{
+			"checksumSHA1": "Xw3H62zKxGYse0tuDoq8PpWrS8s=",
+			"path": "github.com/hyperledger/fabric-contract-api-go/internal",
+			"revision": "f63a39348cc7f0a505d1dec267979142ba1b1f31",
+			"revisionTime": "2021-03-22T16:57:56Z"
+		},
+		{
+			"checksumSHA1": "bHci61HK4CcqLsMu8ZWBGwYwQjM=",
+			"path": "github.com/hyperledger/fabric-contract-api-go/internal/types",
+			"revision": "f63a39348cc7f0a505d1dec267979142ba1b1f31",
+			"revisionTime": "2021-03-22T16:57:56Z"
+		},
+		{
+			"checksumSHA1": "NApd6dEOYht3Cc0fokhWSB1ujmI=",
+			"path": "github.com/hyperledger/fabric-contract-api-go/internal/utils",
+			"revision": "f63a39348cc7f0a505d1dec267979142ba1b1f31",
+			"revisionTime": "2021-03-22T16:57:56Z"
+		},
+		{
+			"checksumSHA1": "PWIj9nflrWDd1qHP8TZt8PF0il8=",
+			"path": "github.com/hyperledger/fabric-contract-api-go/metadata",
+			"revision": "f63a39348cc7f0a505d1dec267979142ba1b1f31",
+			"revisionTime": "2021-03-22T16:57:56Z"
+		},
+		{
+			"checksumSHA1": "SdB9grNighHTUAy4hAGYhraT/rE=",
+			"path": "github.com/hyperledger/fabric-contract-api-go/serializer",
+			"revision": "f63a39348cc7f0a505d1dec267979142ba1b1f31",
+			"revisionTime": "2021-03-22T16:57:56Z"
+		}
+	],
+	"rootPath": "github.com/yjzhu1106/fabric-single/chaincode/go/testChaincode"
+}
