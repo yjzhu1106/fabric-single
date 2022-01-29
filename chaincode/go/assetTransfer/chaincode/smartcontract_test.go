@@ -8,8 +8,8 @@ import (
 	"github.com/hyperledger/fabric-chaincode-go/shim"
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 	"github.com/hyperledger/fabric-protos-go/ledger/queryresult"
-	"github.com/hyperledger/fabric-samples/asset-transfer-basic/chaincode-go/chaincode"
-	"github.com/hyperledger/fabric-samples/asset-transfer-basic/chaincode-go/chaincode/mocks"
+	"github.com/hyperledger/fabric-single/chaincode/go/assetTransfer"
+	"github.com/hyperledger/fabric-single/chaincode/go/assetTransfer/chaincode/mocks"
 	"github.com/stretchr/testify/require"
 )
 
