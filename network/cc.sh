@@ -148,15 +148,25 @@ function upgradeCC() {
 # set -x
 
 # install cc
-installCC 1 0 7051
-installCC 1 1 8051
-installCC 2 0 9051
-installCC 2 1 10051
+function installPeer() {
+  installCC 1 0 7051
+  installCC 1 1 8051
+  installCC 2 0 9051
+  installCC 2 1 10051
+}
+# installCC 1 0 7051
+# installCC 1 1 8051
+# installCC 2 0 9051
+# installCC 2 1 10051
 # init
 if [ $ACTION = 'install' ]; then
+  installPeer
   initCC
 elif [ $ACTION = 'upgrade' ]; then
+  installPeer
   upgradeCC
+elif [ $ACTION = 'installChannel' ]; then
+  initCC
 fi
 # try
 if [ ! $CC_INVOKE_FUNC_NAME = '' ]; then

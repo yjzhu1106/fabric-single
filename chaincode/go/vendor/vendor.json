@@ -1,0 +1,19 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"path": "github.com/golang/protobuf/proto",
+			"revision": ""
+		},
+		{
+			"path": "github.com/golang/protobuf/protos",
+			"revision": ""
+		},
+		{
+			"path": "google.golang.org/protobuf/encoding/prototext",
+			"revision": ""
+		}
+	],
+	"rootPath": "github.com/yjzhu1106/fabric-single/chaincode/go/apmc"
+}
