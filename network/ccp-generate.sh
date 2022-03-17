@@ -49,3 +49,7 @@ CAPEM=crypto-config/peerOrganizations/org2.fabric-iot.edu/ca/ca.org2.fabric-iot.
 
 echo "$(json_ccp $ORG $P0PORT $P1PORT $CAPORT $PEERPEM $CAPEM)" > $CONN_CONF_PATH/connection-org2.json
 echo "$(yaml_ccp $ORG $P0PORT $P1PORT $CAPORT $PEERPEM $CAPEM)" > $CONN_CONF_PATH/connection-org2.yaml
+
+
+
+. cc-caliper-conn-config.sh

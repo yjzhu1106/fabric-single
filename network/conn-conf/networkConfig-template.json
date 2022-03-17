@@ -1,0 +1,79 @@
+{
+	"version": "1.0",
+	"name": "Caliper test",
+	"caliper": {
+		"blockchain": "fabric"
+	},
+	"clients": {
+		"Admin@org1.fabric-iot.edu": {
+			"client": {
+				"organization": "Org1",
+				"connection": {
+					"timeout": {
+						"peer": {
+							"endorser": "300"
+						}
+					}
+				},
+				"credentialStore": {
+					"path": "/tmp/org1",
+					"cryptoStore": {
+						"path": "/tmp/org1"
+					}
+				},
+				"clientPrivateKey": {
+					"path": "../fabric-single/network/crypto-config/peerOrganizations/org1.fabric-iot.edu/users/Admin@org1.fabric-iot.edu/msp/keystore/${ORGPK}"
+				},
+				"clientSignedCert": {
+					"path": "../fabric-single/network/crypto-config/peerOrganizations/org1.fabric-iot.edu/users/Admin@org1.fabric-iot.edu/msp/signcerts/Admin@org1.fabric-iot.edu-cert.pem"
+				}
+			}
+		}
+	},
+	"channels": {
+		"iot-channel": {
+			"created": true,
+			"contracts": [{
+				"id": "testChaincode2",
+				"version": "1.0"
+			}]
+		}
+	},
+	"organizations": {
+		"Org1": {
+            "mspid": "Org1MSP",
+            "peers": [
+                "peer0.org1.fabric-iot.edu",
+                "peer1.org1.fabric-iot.edu"
+            ],
+            "adminPrivateKey": {
+				"path": "../fabric-single/network/crypto-config/peerOrganizations/org1.fabric-iot.edu/users/Admin@org1.fabric-iot.edu/msp/keystore/${ORGPK}"
+			},
+			"signedCert": {
+				"path": "../fabric-single/network/crypto-config/peerOrganizations/org1.fabric-iot.edu/users/Admin@org1.fabric-iot.edu/msp/signcerts/Admin@org1.fabric-iot.edu-cert.pem"
+			}
+        }
+	},
+	"peers": {
+        "peer0.org1.fabric-iot.edu": {
+            "url": "grpcs://localhost:${P0PORT}",
+            "tlsCACerts": {
+                "pem": "${PEERPEM}"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.org${ORG}.fabric-iot.edu",
+                "hostnameOverride": "peer0.org${ORG}.fabric-iot.edu"
+            }
+        },
+        "peer1.org1.fabric-iot.edu": {
+            "url": "grpcs://localhost:${P1PORT}",
+            "tlsCACerts": {
+                "pem": "${PEERPEM}"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer1.org1.fabric-iot.edu",
+                "hostnameOverride": "peer1.org1.fabric-iot.edu"
+            }
+        }
+	}
+}

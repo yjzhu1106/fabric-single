@@ -1,0 +1,79 @@
+{
+	"version": "1.0",
+	"name": "Caliper test",
+	"caliper": {
+		"blockchain": "fabric"
+	},
+	"clients": {
+		"Admin@org1.fabric-iot.edu": {
+			"client": {
+				"organization": "Org1",
+				"connection": {
+					"timeout": {
+						"peer": {
+							"endorser": "300"
+						}
+					}
+				},
+				"credentialStore": {
+					"path": "/tmp/org1",
+					"cryptoStore": {
+						"path": "/tmp/org1"
+					}
+				},
+				"clientPrivateKey": {
+					"path": "../fabric-single/network/crypto-config/peerOrganizations/org1.fabric-iot.edu/users/Admin@org1.fabric-iot.edu/msp/keystore/0404696e41802bce62c0f3fabc82f58f674db8714fd6af918f517259badacb86_sk"
+				},
+				"clientSignedCert": {
+					"path": "../fabric-single/network/crypto-config/peerOrganizations/org1.fabric-iot.edu/users/Admin@org1.fabric-iot.edu/msp/signcerts/Admin@org1.fabric-iot.edu-cert.pem"
+				}
+			}
+		}
+	},
+	"channels": {
+		"iot-channel": {
+			"created": true,
+			"contracts": [{
+				"id": "testChaincode2",
+				"version": "1.0"
+			}]
+		}
+	},
+	"organizations": {
+		"Org1": {
+            "mspid": "Org1MSP",
+            "peers": [
+                "peer0.org1.fabric-iot.edu",
+                "peer1.org1.fabric-iot.edu"
+            ],
+            "adminPrivateKey": {
+				"path": "../fabric-single/network/crypto-config/peerOrganizations/org1.fabric-iot.edu/users/Admin@org1.fabric-iot.edu/msp/keystore/0404696e41802bce62c0f3fabc82f58f674db8714fd6af918f517259badacb86_sk"
+			},
+			"signedCert": {
+				"path": "../fabric-single/network/crypto-config/peerOrganizations/org1.fabric-iot.edu/users/Admin@org1.fabric-iot.edu/msp/signcerts/Admin@org1.fabric-iot.edu-cert.pem"
+			}
+        }
+	},
+	"peers": {
+        "peer0.org1.fabric-iot.edu": {
+            "url": "grpcs://localhost:7051",
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----\nMIICYzCCAgqgAwIBAgIRAPkSiY1OGMjzJ0COP3sJaiYwCgYIKoZIzj0EAwIwfDEL\nMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG\ncmFuY2lzY28xHDAaBgNVBAoTE29yZzEuZmFicmljLWlvdC5lZHUxIjAgBgNVBAMT\nGXRsc2NhLm9yZzEuZmFicmljLWlvdC5lZHUwHhcNMjIwMzE3MDQzNjAwWhcNMzIw\nMzE0MDQzNjAwWjB8MQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEW\nMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEcMBoGA1UEChMTb3JnMS5mYWJyaWMtaW90\nLmVkdTEiMCAGA1UEAxMZdGxzY2Eub3JnMS5mYWJyaWMtaW90LmVkdTBZMBMGByqG\nSM49AgEGCCqGSM49AwEHA0IABCWbuLLmYLECmnJL69NyrekuKZIOOzeE9dYRpnQn\nvmvWMx2Som9jEkwipDCjfNs5EhoN9YSC91yf8XmuEUvjn/GjbTBrMA4GA1UdDwEB\n/wQEAwIBpjAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwEwDwYDVR0TAQH/\nBAUwAwEB/zApBgNVHQ4EIgQgpNN3KKl2whcQe8MTICWuNQYhcOA9q5Bz7VWy2s+d\ne9wwCgYIKoZIzj0EAwIDRwAwRAIgLqUq0gGik0tvJznWg5REymhJ5pb/+9cwbY6S\n6mTHfIcCIADdHN63PrlpNVhXqWlmEkNWKBT1s10zWWiLcOTLf9RQ\n-----END CERTIFICATE-----\n"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.org1.fabric-iot.edu",
+                "hostnameOverride": "peer0.org1.fabric-iot.edu"
+            }
+        },
+        "peer1.org1.fabric-iot.edu": {
+            "url": "grpcs://localhost:8051",
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----\nMIICYzCCAgqgAwIBAgIRAPkSiY1OGMjzJ0COP3sJaiYwCgYIKoZIzj0EAwIwfDEL\nMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG\ncmFuY2lzY28xHDAaBgNVBAoTE29yZzEuZmFicmljLWlvdC5lZHUxIjAgBgNVBAMT\nGXRsc2NhLm9yZzEuZmFicmljLWlvdC5lZHUwHhcNMjIwMzE3MDQzNjAwWhcNMzIw\nMzE0MDQzNjAwWjB8MQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEW\nMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEcMBoGA1UEChMTb3JnMS5mYWJyaWMtaW90\nLmVkdTEiMCAGA1UEAxMZdGxzY2Eub3JnMS5mYWJyaWMtaW90LmVkdTBZMBMGByqG\nSM49AgEGCCqGSM49AwEHA0IABCWbuLLmYLECmnJL69NyrekuKZIOOzeE9dYRpnQn\nvmvWMx2Som9jEkwipDCjfNs5EhoN9YSC91yf8XmuEUvjn/GjbTBrMA4GA1UdDwEB\n/wQEAwIBpjAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwEwDwYDVR0TAQH/\nBAUwAwEB/zApBgNVHQ4EIgQgpNN3KKl2whcQe8MTICWuNQYhcOA9q5Bz7VWy2s+d\ne9wwCgYIKoZIzj0EAwIDRwAwRAIgLqUq0gGik0tvJznWg5REymhJ5pb/+9cwbY6S\n6mTHfIcCIADdHN63PrlpNVhXqWlmEkNWKBT1s10zWWiLcOTLf9RQ\n-----END CERTIFICATE-----\n"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer1.org1.fabric-iot.edu",
+                "hostnameOverride": "peer1.org1.fabric-iot.edu"
+            }
+        }
+	}
+}
